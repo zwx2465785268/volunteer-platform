@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 
-export default function LoginSuccessPage() {
+function LoginSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user, isLoading } = useAuth()
@@ -49,5 +49,13 @@ export default function LoginSuccessPage() {
         <p className="mt-2 text-sm text-gray-400">等待时间: {(waitTime * 100)}ms</p>
       </div>
     </div>
+  )
+}
+
+export default function LoginSuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginSuccessContent />
+    </Suspense>
   )
 }
